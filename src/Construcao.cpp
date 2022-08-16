@@ -22,16 +22,34 @@ void constroi_solucao(int n, vector<int>& s, float **distancia)
 void constroi_solucao_gulosa_vizinho_mais_proximo(int n, vector<int> &s, float **d)
 {
   vector<int> nao_visitada; //lista das cidades ainda nao visitadas
-
+  // 583.594879 - resultado
   // inserir um elemento no final de uma lista
-  for(int i = 1; i < n; i++)
-    nao_visitada.push_back(i);
+  for(int i = 1; i < n; i++) nao_visitada.push_back(i);
 
   s.clear(); // limpa solucao
   s.push_back(0); // A cidade de origem é a cidade 0
 
   int mais_proxima; // armazena a cidade mais proxima para inserir na solucao
   float dist; // armazena a menor distancia
+
+  int j = 1;
+  while (j < n) {
+    dist = INT8_MAX;
+    int i = 0;
+    int pos_i = 0;
+
+    while (i < nao_visitada.size()) {
+      if (d[s.at(j-1)][nao_visitada[i]] < dist) {
+        dist = d[s.at(j-1)][nao_visitada[i]];
+        mais_proxima = nao_visitada[i];
+        pos_i = i;
+      }
+      i++;
+    }
+    s.push_back(mais_proxima);
+    nao_visitada.erase(nao_visitada.begin() + pos_i);
+    j++;
+  }
 
 /*
 	Implementar o loop do metodo construtivo, 
@@ -88,7 +106,7 @@ void constroi_solucao_gulosa_insercao_mais_barata(int n, vector<int> *s, float *
     /* Insere as duas proximas cidades pela heuristica do vizinho mais proximo */
 
     while ( j < 3){
-        dist = INT_MAX;
+        dist = INT8_MAX;
         int i = 0;
         int pos_i = 0;
 
@@ -115,7 +133,7 @@ void constroi_solucao_gulosa_insercao_mais_barata(int n, vector<int> *s, float *
       custo(k) = d(i,k) + d(k,j) - d(i,j) */
 
     while (j < n) {
-      melhor_sij = INT_MAX;
+      melhor_sij = INT8_MAX;
 
       int k = 0;
       int pos_k;

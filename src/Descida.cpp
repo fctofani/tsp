@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <algorithm>
+#include <chrono>
 #include <random>
 #include <utility> //funcao swap (para versao anterior a C11 usar <algorithm>)
 #include "Arquivos.h"
