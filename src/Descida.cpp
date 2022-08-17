@@ -83,23 +83,30 @@ float vizinho_aleatorio(int n, vector<int> &s, float **d, float fo, int *melhor_
 /* Método da descida com estrategia best improvement */
 float descida_best_improvement(int n, vector<int> &s, float **d)
 {
-  int melhor_i, melhor_j, iter;
+  int melhor_i = 0, melhor_j = 1, iter;
   float fo_viz, fo;
-  bool melhorou;
+  bool melhorou = true;
   clock_t inicio_CPU, fim_CPU;
 
   fo = fo_viz = calcula_fo(n, s, d);
   limpa_arquivo((char*)"DescidaBI.txt");
   inicio_CPU = fim_CPU = clock();
   iter = 0;
-  imprime_fo((char*)"DescidaBI.txt", (fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,fo,iter);
+  imprime_fo((char*)"DescidaBI.txt", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,(double)fo,iter);
 
-    /*  Implementar a descida com estrategia best improvement */
-
-
+  while (melhorou) {
+    fo_viz = melhor_vizinho(n, s, d, fo, &melhor_i, &melhor_j);
+    if (fo_viz < fo) {
+      melhorou = true;
+      swap(s[melhor_i], s[melhor_j]);
+      fo = fo_viz;
+    }
+    else melhorou = false;
+    iter++;
+  }
 
   fim_CPU = clock();
-  imprime_fo((char*)"DescidaBI.txt", (fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,fo,iter);
+  imprime_fo((char*)"DescidaBI.txt", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,(double)fo,iter);
   return fo;
 }//descida_best_improvement
 

@@ -22,7 +22,6 @@ void constroi_solucao(int n, vector<int>& s, float **distancia)
 void constroi_solucao_gulosa_vizinho_mais_proximo(int n, vector<int> &s, float **d)
 {
   vector<int> nao_visitada; //lista das cidades ainda nao visitadas
-  // 583.594879 - resultado
   // inserir um elemento no final de uma lista
   for(int i = 1; i < n; i++) nao_visitada.push_back(i);
 
