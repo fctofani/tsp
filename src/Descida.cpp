@@ -103,6 +103,8 @@ float descida_best_improvement(int n, vector<int> &s, float **d)
     }
     else melhorou = false;
     iter++;
+    fim_CPU = clock();
+    imprime_fo((char*)"DescidaBI.txt", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,(double)fo,iter);
   }
 
   fim_CPU = clock();
@@ -140,30 +142,51 @@ float descida_randomica(int n, vector<int> &s, float **d, int IterMax)
 
 float vizinho_first_improvement(int n, vector<int> &s, float **d, float fo, int *melhor_i, int *melhor_j)
 {
- float fo_melhor_viz = fo;
- bool melhorou = false;
- vector<int> vet;
+  float fo_melhor_viz = fo;
+  vector<int> vet;
 
- for (int i=0; i < n; i++) vet.push_back(i);
- //Para c++ 11
- unsigned seed = chrono::system_clock::now().time_since_epoch().count();
- default_random_engine r(seed);
- shuffle ( vet.begin(), vet.end(), r );
- //Para c++ 98
- //random_shuffle ( vet.begin(), vet.end() );
+  for (int i=0; i < n; i++) vet.push_back(i);
+  //Para c++ 11
+  unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+  default_random_engine r(seed);
+  shuffle ( vet.begin(), vet.end(), r );
+  //Para c++ 98
+  //random_shuffle ( vet.begin(), vet.end() );
 
- 
- // retornar a distancia do melhor vizinho
- return fo_melhor_viz;
+  for (int i = 0; i < n-1; i++) {
+    for (int j = 0; j < i-1; j++) {
+      float delta1 = calcula_delta(n,s,d,vet[i],vet[j]);
+
+      // Faz o movimento
+      swap(s[vet[i]], s[vet[j]]);
+
+      float delta2 = calcula_delta(n,s,d,vet[i],vet[j]);
+
+      // Calcular a nova distancia
+      fo_melhor_viz = fo - delta1 + delta2;
+
+      if (fo_melhor_viz < fo) {
+        *melhor_i = vet[i];
+        *melhor_j = vet[j];
+        j = i-1; // parando os loops.
+        i = n-1;
+      } else {
+        swap(s[vet[i]], s[vet[j]]); // só troco de volta se não for melhor.
+      }
+    }
+  }
+
+  // retornar a distancia do melhor vizinho
+  return fo_melhor_viz;
 
 }//melhor_vizinho
 
 
 float descida_first_improvement(int n, vector<int> &s, float **d)
 {
- int aux, melhor_i, melhor_j, iter;
+ int aux, melhor_i = 0, melhor_j = 1, iter;
  float fo_viz, fo;
- bool melhorou;
+ bool melhorou = true;
  clock_t inicio_CPU, fim_CPU;
 
  fo = fo_viz = calcula_fo(n, s, d);
@@ -172,13 +195,17 @@ float descida_first_improvement(int n, vector<int> &s, float **d)
  iter = 0;
  imprime_fo((char*)"DescidaFI.txt", (fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,fo,iter);
 
-  /* Implementar a descida First Improvement armazenando, a cada iteração:
-      o tempo de execução
-      o valor da função de avaliação da solução corrente
-      a iteração na qual a solução vizinha foi aceita
-      Para fazer essa impressão, use o procedimento imprime_fo e imprime_fo_viz, 
-      disponíveis em Arquivos.cpp */
- 
+  while (melhorou) {
+    fo_viz = vizinho_first_improvement(n, s, d, fo, &melhor_i, &melhor_j);
+    if (fo_viz < fo) {
+      melhorou = true;
+      fo = fo_viz;
+    } else melhorou = false;
+    iter++;
+
+    fim_CPU = clock();
+    imprime_fo((char*)"DescidaFI.txt", (fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,fo,iter);
+  }
 
   fim_CPU = clock();
   imprime_fo((char*)"DescidaFI.txt", (fim_CPU - inicio_CPU)/CLOCKS_PER_SEC,fo,iter);

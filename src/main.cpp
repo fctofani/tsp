@@ -23,6 +23,7 @@ Atualizado por Puca Huachi em ago/2019
 #include "Construcao.h"
 #include "Menus.h"
 #include "Descida.h"
+#include "MS.h"
 
 //---------------------------------------------------------------------------
 using namespace std;
@@ -112,11 +113,23 @@ int main(int argc, char* argv[])
            printf("Nao implementado\n"); break;
 
     case 4: /* Descida com primeiro de melhora */
-           printf("Nao implementado\n");
+           inicio_CPU = clock();
+           fo = descida_first_improvement(n, s, d);
+           fim_CPU = clock();
+           printf("\nSolucao obtida usando a estrategia First Improvement do Metodo da Descida:\n");
+           imprime_rota(s, n);
+           printf("Funcao objetivo = %f\n",fo);
+           printf("Tempo de CPU = %f segundos:\n",(double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC);
            break;
 
     case 5: /* Multi-Start */
-            printf("Nao implementado\n");
+            inicio_CPU = clock();
+            fo = MS(n, s, d, n*2);
+            fim_CPU = clock();
+            printf("\nSolucao obtida usando a meta-heuristica Multi-Start:\n");
+            imprime_rota(s, n);
+            printf("Funcao Objetivo = %f\n", fo);
+            printf("Tempo de CPU = %f segundos: \n", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC);
             break;
 
     case 6: /* Simulated Annealing */

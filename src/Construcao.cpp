@@ -33,7 +33,7 @@ void constroi_solucao_gulosa_vizinho_mais_proximo(int n, vector<int> &s, float *
 
   int j = 1;
   while (j < n) {
-    dist = INT8_MAX;
+    dist = INT64_MAX;
     int i = 0;
     int pos_i = 0;
 
@@ -105,7 +105,7 @@ void constroi_solucao_gulosa_insercao_mais_barata(int n, vector<int> *s, float *
     /* Insere as duas proximas cidades pela heuristica do vizinho mais proximo */
 
     while ( j < 3){
-        dist = INT8_MAX;
+        dist = INT64_MAX;
         int i = 0;
         int pos_i = 0;
 
@@ -132,7 +132,7 @@ void constroi_solucao_gulosa_insercao_mais_barata(int n, vector<int> *s, float *
       custo(k) = d(i,k) + d(k,j) - d(i,j) */
 
     while (j < n) {
-      melhor_sij = INT8_MAX;
+      melhor_sij = INT64_MAX;
 
       int k = 0;
       int pos_k;

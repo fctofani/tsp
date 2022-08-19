@@ -26,7 +26,7 @@ float AG(int n,
     vector<int> s_star;   // vetor que contem a melhor solucao gerada
     float fo, fo_star;   // valor da melhor solucao gerada
 
-    fo_star = INT8_MAX;
+    fo_star = INT64_MAX;
     if (nind % 2 != 0){
         printf("Numero de individuos deve ser par!\n");
         printf("Vou aumentar o numero de individuos ...\n");
@@ -53,7 +53,7 @@ float AG(int n,
     printf("Melhor solucao encontrada na construcao: %f\n", fo_star);
 
     int ngeracoes = 0;
-    float desvio = INT8_MAX;
+    float desvio = INT64_MAX;
     while (desvio > max_desvio){
         ngeracoes++;
 
@@ -112,7 +112,7 @@ int roleta(int nind, std::vector<float> &fo_pop)
     int escolhido;
 
     soma = 0;
-    fo_min = INT8_MAX;
+    fo_min = INT64_MAX;
     fo_max = INT_MIN;
 
     for (int j = 0; j < nind; j++){

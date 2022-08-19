@@ -27,7 +27,7 @@ float melhor_vizinho_BT(int n,
                         int **listaTabu)
 {
     int aux;
-    float fo_melhor_viz = INT8_MAX; //Pode aceitar solução de piora
+    float fo_melhor_viz = INT64_MAX; //Pode aceitar solução de piora
 
     float fo_viz;
     for(int i=0 ; i < n - 1 ; i++){
