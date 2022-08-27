@@ -74,7 +74,19 @@ float vizinho_aleatorio(int n, vector<int> &s, float **d, float fo, int *melhor_
     int i, j;
     float delta1, delta2;
 
+    i = rand() % n;
+    j = rand() % n;
+    while(j == i) j = rand() % n;
 
+    delta1 = calcula_delta(n, s, d, i, j);
+    swap(s[i], s[j]);
+    delta2 = calcula_delta(n, s, d, i, j);
+    swap(s[i], s[j]);
+
+    fo_viz = fo - delta1 + delta2;
+    *melhor_i = i;
+    *melhor_j = j;
+    
     // retornar a distancia do  vizinho
     return fo_viz;
 

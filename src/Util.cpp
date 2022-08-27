@@ -201,7 +201,7 @@ void insere_meio_vetor(int *vetor, int valor, int pos, int qde)
 }
 
 
-/* Procura a posição da cidade dada no vetor */
+/* Procura a posiï¿½ï¿½o da cidade dada no vetor */
 int busca_pos_valor(int *vetor, int cidade, int n)
 {
   int i = 0;
@@ -209,7 +209,7 @@ int busca_pos_valor(int *vetor, int cidade, int n)
   return i;
 }
 
-/* Retorna se uma cidade já foi inserida no vetor */
+/* Retorna se uma cidade jï¿½ foi inserida no vetor */
 int foi_inserida(int *vetor, int cidade, int n)
 {
   for (int i = 0; i < n; i++)
@@ -217,7 +217,7 @@ int foi_inserida(int *vetor, int cidade, int n)
   return false;
 }
 
-/* Calcula o desvio-padrão das fos da população */
+/* Calcula o desvio-padrï¿½o das fos da populaï¿½ï¿½o */
 float calcula_desvio_padrao(vector<float> &fo_pop, int n)
 {
   float media, desvio, somatorio;

@@ -24,6 +24,7 @@ Atualizado por Puca Huachi em ago/2019
 #include "Menus.h"
 #include "Descida.h"
 #include "MS.h"
+#include "SA.h"
 
 //---------------------------------------------------------------------------
 using namespace std;
@@ -45,6 +46,7 @@ int main(int argc, char* argv[])
   double prob_crossover;
   double prob_mutacao;
   float alpha = 0;
+  int samax;
 
   float temp;
 
@@ -133,7 +135,14 @@ int main(int argc, char* argv[])
             break;
 
     case 6: /* Simulated Annealing */
-            printf("Nao implementado\n");
+            constroi_solucao_aleatoria(n, s, d);
+            inicio_CPU = clock();
+            fo = SA(n, s, d, 0.95, 100*n, 300, 0.01);
+            fim_CPU = clock();
+            printf("\nSolucao obtida usando a meta-heuristica Simulated Annealing:\n");
+            imprime_rota(s, n);
+            printf("Funcao Objetivo = %f\n", fo);
+            printf("Tempo de CPU = %f segundos: \n", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC);
             break;
 
     case 7: /* Busca Tabu */
