@@ -20,7 +20,7 @@ CC_FLAGS=-c         \
          -Wall
 
 # Command used at clean target
-RM = rm -rf
+RM = del
 
 #
 # Compilation and linking
@@ -44,10 +44,10 @@ $(PROJ_NAME): $(OBJ)
 	@ echo ' '
 
 objFolder:
-	@ mkdir -p obj
+	@ mkdir obj
 
 clean:
-	@ $(RM) ./obj/*.o $(PROJ_NAME) *~
+	@ $(RM) .\obj\*.o $(PROJ_NAME) *~
 	@ rmdir obj
 
 .PCVS: all clean

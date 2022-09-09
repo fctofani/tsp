@@ -189,7 +189,6 @@ void constroi_solucao_parcialmente_gulosa_vizinho_mais_proximo(int n, vector<int
     //limpa solucao corrente
     s.clear();
     s.push_back(0);  /* A cidade origem � a cidade 0 */
-
     
     //Ordena lista
     ordena_dist_crescente ordem;
@@ -199,16 +198,39 @@ void constroi_solucao_parcialmente_gulosa_vizinho_mais_proximo(int n, vector<int
     /* Ordenando a lista de cidade nao visitadas */
     stable_sort(nao_visitadas.begin(), nao_visitadas.end(), ordem);
 
-
     int j = 1;
-    int cidade_escolhida;
-    while (j < n){
+    int selected;
+    vector<int> lrc;
 
-      /*
-      *
-      *   Implementar construção da solução elemento por elemento
-      *
-      */
+    while (j < n) {
+      float gmin = d[ordem.index][nao_visitadas[0]];
+      printf("gmin: %f\n", gmin);
+      float gmax = d[ordem.index][nao_visitadas[nao_visitadas.size()-1]];
+      printf("gmax: %f\n", gmax);
+      float g = gmin + alpha * (gmax - gmin);
+      printf("g: %f\n", g);
+      
+      int k = 0;
+      while (d[ordem.index][nao_visitadas[k]] <= g && k < nao_visitadas.size()) {
+        lrc.push_back(nao_visitadas[k]);
+        k++;
+      }
+      printf("LRC: {");
+      for (int i : lrc) printf(" %d", i);
+      printf(" }\n");
+
+      selected = rand() % lrc.size();
+
+      s.push_back(lrc[selected]);
+
+      nao_visitadas.erase(nao_visitadas.begin() + selected);
+
+      lrc.clear();
+      
+      ordem.index = s[j];
+      j++;
+
+      stable_sort(nao_visitadas.begin(), nao_visitadas.end(), ordem);
     }
 }
 

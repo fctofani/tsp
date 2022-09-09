@@ -75,7 +75,7 @@ int main(int argc, char* argv[])
                  printf("Funcao objetivo = %f\n",fo);
 	         break;
            case 2: /* Geracao parcialmente gulosa de uma solucao inicial via metodo do vizinho mais proximo */
-                 alpha = 0.1;
+                 alpha = 0;
                  constroi_solucao_parcialmente_gulosa_vizinho_mais_proximo(n, s, d, alpha);
                  fo = calcula_fo(n, s, d);
                  printf("\nSolucao construida de forma parcialmente gulosa (Vizinho Mais Proximo):\n");
