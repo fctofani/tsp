@@ -25,6 +25,7 @@ Atualizado por Puca Huachi em ago/2019
 #include "Descida.h"
 #include "MS.h"
 #include "SA.h"
+#include "GRASP.h"
 
 //---------------------------------------------------------------------------
 using namespace std;
@@ -90,8 +91,14 @@ int main(int argc, char* argv[])
                  printf("Funcao objetivo = %f\n",fo);
 	         break;
            case 4: /* Geracao parcialmente gulosa de uma solucao inicial via insercao mais barata */
-                 printf("Ainda nao implementado...\n");
+                 alpha = 0.1;
+                 constroi_solucao_parcialmente_gulosa_insercao_mais_barata(n, s ,d, alpha);
+                 fo = calcula_fo(n, s, d);
+                 printf("\nSolucao construida de forma parcialmente gulosa (Insercao Mais Barata):\n");
+                 imprime_rota(s, n);
+                 printf("Funcao objetivo = %f\n",fo);
 	         break;
+              //   printf("Nao implementado\n"); break;
            case 5: /* Geracao aleatoria de uma solucao inicial */
                  constroi_solucao_aleatoria(n, s, d);
                  fo = calcula_fo(n, s, d);
@@ -154,7 +161,14 @@ int main(int argc, char* argv[])
            break;
 
     case 9: /* GRASP */
-           printf("Nao implementado\n");
+           alpha = 0.3;
+           inicio_CPU = clock();
+           fo = GRASP(n, s, d, alpha, 700);
+           fim_CPU = clock();
+           printf("\nSolucao obtida usando a meta-heuristica GRASP:\n");
+           imprime_rota(s, n);
+           printf("Funcao Objetivo = %f\n", fo);
+           printf("Tempo de CPU = %f segundos: \n", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC);
            break;
 
     case 10: /* VND */

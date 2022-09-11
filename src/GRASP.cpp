@@ -24,8 +24,11 @@ float GRASP(int n, std::vector<int> &s, float **d, float alpha, int GRASP_max /*
         constroi_solucao_parcialmente_gulosa_vizinho_mais_proximo(n ,s, d, alpha);
         fo = descida_best_improvement(n, s, d);
 
+        if (fo < fo_star) {
+            fo_star = fo;
+            s_star = s;
+        }
     }
-    
     
     s = s_star;
 
