@@ -48,8 +48,14 @@ float melhor_vizinho_BT(int n,
             /* Implementar a condição para armazenar o melhor movimento
              (melhor troca) que nao seja tab ou, se tabu, que melhore 
              a função objetivo estrela */
+            if (tabu && fo_viz < fo_star) !tabu;
 
-
+            if (fo_viz < fo_melhor_viz && !tabu) {
+                fo_melhor_viz = fo_viz;
+                *melhor_i = i;
+                *melhor_j = j;
+            }
+            
 
             // desfaz o movimento
             swap(s[i],s[j]);
@@ -66,7 +72,7 @@ float BT(int n, vector<int> &s, float **d, int tamanho_maximo_lista, int BTmax)
     int iterBT = 0;  // numero corrente de iteracoes da Busca Tabu
     int MelhorIter = 0; // Iteracao em que ocorreu a melhor solucao
     vector<int> s_star;
-    float fo, fo_star;
+    float fo, fo_star, fo_viz;
 
     // cria e inicializa a lista tabu. Implementada como uma matriz de duração
     int **listaTabu;
@@ -88,12 +94,23 @@ float BT(int n, vector<int> &s, float **d, int tamanho_maximo_lista, int BTmax)
     imprime_fo((char*)"BT.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo, iterBT);
     imprime_fo((char*)"BT_Melhorfo.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo_star, iterBT);
 
-    /*
-     *
-     * Implementar o laço da BT
-     *
-     */
-
+    while (iterBT - MelhorIter <= BTmax) {
+        iterBT++;
+        fo_viz = melhor_vizinho_BT(n, s, d, fo, &melhor_i, &melhor_j, fo_star, iterBT, listaTabu);
+        listaTabu[melhor_i][melhor_j] = iterBT + tamanho_maximo_lista;
+        swap(s[melhor_i], s[melhor_j]);
+        fo = fo_viz;
+        if (fo_viz < fo_star) {
+            s_star = s;
+            fo_star = fo_viz;
+            MelhorIter = iterBT;
+            fim_CPU = clock();
+            imprime_fo((char*)"BT.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo, iterBT);
+            imprime_fo((char*)"BT_Melhorfo.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo_star, iterBT);
+        }
+        fim_CPU = clock();
+        imprime_fo((char*)"BT.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo, iterBT);
+    }
 
     fim_CPU = clock();
     imprime_fo((char*)"BT.txt", (float)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC, fo, iterBT);

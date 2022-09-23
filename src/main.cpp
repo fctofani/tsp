@@ -27,6 +27,7 @@ Atualizado por Puca Huachi em ago/2019
 #include "SA.h"
 #include "GRASP.h"
 #include "LAHC.h"
+#include "BT.h"
 
 //---------------------------------------------------------------------------
 using namespace std;
@@ -155,6 +156,14 @@ int main(int argc, char* argv[])
 
     case 7: /* Busca Tabu */
            printf("Nao implementado\n");
+           constroi_solucao_aleatoria(n, s, d);
+           inicio_CPU = clock();
+           fo = BT(n, s, d, 10, 20);
+           fim_CPU = clock();
+           printf("\nSolucao obtida usando a meta-heuristica Busca Tabu:\n");
+           imprime_rota(s, n);
+           printf("Funcao Objetivo = %f\n", fo);
+           printf("Tempo de CPU = %f segundos: \n", (double)(fim_CPU - inicio_CPU)/CLOCKS_PER_SEC);
            break;
 
     case 8: /* Iterated Local Search */
